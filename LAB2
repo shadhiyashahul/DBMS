@@ -1,0 +1,250 @@
+student@ml-27:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.40-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show database
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> create database shadhiya
+    -> ;
+ERROR 1007 (HY000): Can't create database 'shadhiya'; database exists
+mysql> use shadhiya
+Database changed
+mysql> create table new2(roll_no int,PRIMARY KEY,class varchar(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',class varchar(10))' at line 1
+mysql> create table new2(roll_no int PRIMARY KEY,class varchar(10));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc new2;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| class   | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table new3(roll_no int,name varchar(20));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc new3;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | YES  |     | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table new3 add constraint PK_STU PRIMARY KEY(roll_no);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc new3;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table new3 drop PRIMARY KEY;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table new4(roll_no int PRIMARY KEY,name varchar(10));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table new5(roll int,room_no int, FOREIGN KEY(roll) REFERENCES new4(roll_no)); 
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc new5
+    -> ;
++---------+------+------+-----+---------+-------+
+| Field   | Type | Null | Key | Default | Extra |
++---------+------+------+-----+---------+-------+
+| roll    | int  | YES  | MUL | NULL    |       |
+| room_no | int  | YES  |     | NULL    |       |
++---------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into new4(102,"AAA");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '102,"AAA")' at line 1
+mysql> insert into new4 values(102,"AAA");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into new4 values(103,"BBB");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into new4 values(104,"CCC");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from new4;
++---------+------+
+| roll_no | name |
++---------+------+
+|     102 | AAA  |
+|     103 | BBB  |
+|     104 | CCC  |
++---------+------+
+3 rows in set (0.00 sec)
+
+mysql> insert into new5 values(104,"2000");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into new5 values(102,"2020");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from new5;
++------+---------+
+| roll | room_no |
++------+---------+
+|  104 |    2000 |
+|  102 |    2020 |
++------+---------+
+2 rows in set (0.00 sec)
+
+mysql> create table new6
+    -> ;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table new6(User ID int PRIMARY KEY,email_id varchar(25));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ID int PRIMARY KEY,email_id varchar(25))' at line 1
+mysql> create table new6(User_ID int PRIMARY KEY,email_id varchar(25));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table new6(User_ID int PRIMARY KEY,email_id varchar(25)UNIQUE);
+ERROR 1050 (42S01): Table 'new6' already exists
+mysql> create table new6(User_ID int PRIMARY KEY,email_id varchar(25));
+ERROR 1050 (42S01): Table 'new6' already exists
+mysql> insert into new6 values(205,'abc@gmail.com'),(206,'def@gmail.com');
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select 
+    -> select * from new6;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from new6' at line 2
+mysql> create table new7(roll_no int NOT NULL,name varchar(25));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into new7 values(10,'ram');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into new7 values(NULL,'ram');
+ERROR 1048 (23000): Column 'roll_no' cannot be null
+mysql> create table new8(emp_id int PRIMARY KEY,emp_age int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table new9(emp_id int PRIMARY KEY,Age int CHECK (Age>=18));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into new9 values(101,35);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into new9 values(110,40);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from new9;
++--------+------+
+| emp_id | Age  |
++--------+------+
+|    101 |   35 |
+|    110 |   40 |
++--------+------+
+2 rows in set (0.00 sec)
+
+mysql> create table new10(emp_id int PRIMARY KEY, Fname varchar(10)NOT NULL,Lname varchar(10), salary int NOT NULL,status varchar(20) DEFAULT 'Active');
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into new10 values(20,shadhiya,shahul,2000000,Active);
+ERROR 1054 (42S22): Unknown column 'shadhiya' in 'field list'
+mysql> insert into new10 values(20,'shadhiya','shahul',2000000,Active);
+ERROR 1054 (42S22): Unknown column 'Active' in 'field list'
+mysql> insert into new10 values(20,'shadhiya','shahul',2000000,'Active');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into new10 values(20,'santiago','jolly',2000,'Active');
+ERROR 1062 (23000): Duplicate entry '20' for key 'new10.PRIMARY'
+mysql> insert into new10 values(25,'santiago','jolly',2000,'Active');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from new10;
++--------+----------+--------+---------+--------+
+| emp_id | Fname    | Lname  | salary  | status |
++--------+----------+--------+---------+--------+
+|     20 | shadhiya | shahul | 2000000 | Active |
+|     25 | santiago | jolly  |    2000 | Active |
++--------+----------+--------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> insert into new10 (emp_id,Fname,Lname,salary)values(21,'aa','bb',20000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from new10;
++--------+----------+--------+---------+--------+
+| emp_id | Fname    | Lname  | salary  | status |
++--------+----------+--------+---------+--------+
+|     20 | shadhiya | shahul | 2000000 | Active |
+|     21 | aa       | bb     |   20000 | Active |
+|     25 | santiago | jolly  |    2000 | Active |
++--------+----------+--------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> insert into new10 (emp_id,Fname,Lname,salary,status)values(22,'shhh','hhhaa',20000,'inactive');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from new10;
++--------+----------+--------+---------+----------+
+| emp_id | Fname    | Lname  | salary  | status   |
++--------+----------+--------+---------+----------+
+|     20 | shadhiya | shahul | 2000000 | Active   |
+|     21 | aa       | bb     |   20000 | Active   |
+|     22 | shhh     | hhhaa  |   20000 | inactive |
+|     25 | santiago | jolly  |    2000 | Active   |
++--------+----------+--------+---------+----------+
+4 rows in set (0.00 sec)
+
+mysql> create table employee(emp_id int PRIMARY KEY,name varchar(10),department varchar(10));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into employee values(205,'miliya','CSEAI');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into employee values(201,'ANAGA','CSEAI');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(204,'PUNNYA','CSEAI');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from employee;
++--------+--------+------------+
+| emp_id | name   | department |
++--------+--------+------------+
+|    201 | ANAGA  | CSEAI      |
+|    204 | PUNNYA | CSEAI      |
+|    205 | miliya | CSEAI      |
++--------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into employee values(205,'shadhiya','CSEAI');
+ERROR 1062 (23000): Duplicate entry '205' for key 'employee.PRIMARY'
+mysql> create table employee1(emp_id int PRIMARY KEY,department varchar(10));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table employee2(emp_id int PRIMARY KEY,department1 varchar(10),FOREIGN KEY(department)REFERENCES (department));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(department))' at line 1
+mysql> create table employee2(emp_id int PRIMARY KEY,department1 varchar(10),FOREIGN KEY(department1)REFERENCES (department));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(department))' at line 1
+mysql> ^C
+mysql> 
+
