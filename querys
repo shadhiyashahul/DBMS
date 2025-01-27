@@ -1,1 +1,73 @@
+/*
+select salesman_id, name, commission from salesman1;
+*/
+/*
+select ord_date, salesman_id, ord_no,purch_amt from orders1;
+*/
 
+/*
+select distinct salesman_id from orders1;
+*/
+/*
+select name from salesman1 where city='ekm';*/
+/*
+select * from customer1 where grade='A';
+*/
+
+
+/*
+select ord_no,ord_date,purch_amt from orders1 where salesman_id=101;
+*/
+/*
+create table noble_win1(year number(4),subject char(4), winner char(10),country char(3),cat char(3));
+*/
+
+/*
+insert into noble_win1 values(&year,'&subject','&winner','&country','&cat');
+*/
+
+/*
+select year,subject,winner from noble_win1 where year=2000;*/
+
+/*
+select winner from noble_win1 where year=2004 AND subject='mat';*/
+/*
+select year ,subject from noble_win1 where winner='ramu';*/
+/*
+select winner from noble_win1 where subject='mat' and year>=1950;*/
+/*
+select year,subject,winner,country from noble_win1 where subject='mat' and year>=1990 and year<=2003; 
+*/
+/*
+select * from noble_win1 where winner LIKE 'ram%';
+*/
+/*
+select * from noble_win1 where (subject='mat'and year=2000) UNION (select * from noble_win1 where (subject='eng'and year=2000));
+*/
+/*
+select * from noble_win1 where year=2000 and subject not in('mat');
+*/
+
+/*
+create table products(p_id number(1),p_price number(4),p_name char(5));
+ */
+/*
+ insert into products values(&p_id,&p_price,'&p_name');
+ */
+/* 
+ select min(p_price) AS MINIMUM_PRICE from products;
+ 
+
+ 
+ select count(p_price) AS total_products from products;
+ */
+ 
+ 
+ 
+ 
+ 
+ select avg(p_price) AS Average_price from products;
+ 
+ 
+ 
+ 
